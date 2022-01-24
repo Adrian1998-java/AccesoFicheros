@@ -1,7 +1,11 @@
 package aed.accesoficheros;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -176,7 +180,11 @@ public class FicheroController implements Initializable {
 			System.err.println("Ocurrio el siguiente error: " + e);
 		}
 	}
-
+	/**
+	 * Borra todo el contenido de una carpeta y tambien la misma
+	 * 
+	 * @param listar La lista de ficheros/carpetas a eliminar
+	 */
 	public void BorrarDirectorio(File listar) {
 		File[] ficheros = listar.listFiles();
 
@@ -188,19 +196,67 @@ public class FicheroController implements Initializable {
 		}
 	}
 
+	//ModificarFichero
 	@FXML
 	void onModificar(ActionEvent event) {
 
+		try {
+			FileWriter fw = null;
+			PrintWriter pw = null;
+			
+			fw = new FileWriter(rutaActual.get());
+			pw = new PrintWriter(fw);
+			pw.println(contenidoFichero.get());
+			
+			fw.close();
+		}
+		catch (Exception e) {
+			System.err.println("Ocurrio el siguiente error: " + e);
+		}
 	}
 
 	@FXML
 	void onMover(ActionEvent event) {
-
+		try {
+			File f1 = new File(rutaActual.get());
+			File f2 = new File(multiFuncion.get());
+			
+			if(f1.renameTo(f2))
+			{
+				System.out.println("Renombrado de"+rutaActual+" a "+multiFuncion);
+			}
+			else
+			{
+				System.out.println("No renombrado de"+rutaActual+" a "+multiFuncion);
+			}
+		}
+		catch(Exception e)
+		{
+			System.err.println("Ocurrio el siguiente error: " + e);
+		}
 	}
 
 	@FXML
 	void onVerContenido(ActionEvent event) {
-
+		try {
+			File f1 = new File(rutaActual.get());
+			
+			if(f1.canRead())
+			{
+				String cadena;
+				
+				FileReader fr = new FileReader(rutaActual.get());
+				BufferedReader bf = new BufferedReader(fr);
+				
+				while((cadena = bf.readLine())!=null) {
+					contenidoTextArea.setText(contenidoTextArea.getText()+cadena);
+				}
+			}
+		}
+		catch(Exception e)
+		{
+			System.err.println("Ocurrio el siguiente error: " + e);
+		}
 	}
 
 	@FXML

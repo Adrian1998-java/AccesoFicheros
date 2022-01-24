@@ -41,7 +41,7 @@
                <children>
                   <Button fx:id="crearButton" mnemonicParsing="false" onAction="#onCrear" text="Crear" />
                   <Button fx:id="eliminarButton" mnemonicParsing="false" onAction="#onEliminar" text="Eliminar" />
-                  <Button fx:id="moverButton" mnemonicParsing="false" onAction="#onMover" text="Mover" />
+                  <Button fx:id="moverButton" mnemonicParsing="false" onAction="#onMover" text="Mover / Renombrar" />
                   <CheckBox fx:id="carpetaCheck" mnemonicParsing="false" text="Es carpeta" />
                   <CheckBox fx:id="ficheroCheck" mnemonicParsing="false" text="Es fichero" />
                </children>
