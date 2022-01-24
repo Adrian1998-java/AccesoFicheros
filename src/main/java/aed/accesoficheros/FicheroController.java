@@ -11,6 +11,7 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleListProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -63,7 +64,7 @@ public class FicheroController implements Initializable {
 	private Button verFicherosCarpetasButton;
 
 	@FXML
-	private ListView<File> ficheroCarpetasButton;
+	private ListView<File> ficheroCarpetasList;
 
 	@FXML
 	private Button verContenidoButton;
@@ -88,13 +89,37 @@ public class FicheroController implements Initializable {
 
 		contenidoTextArea.textProperty().bindBidirectional(contenidoFichero);
 
-		ficheroCarpetasButton.itemsProperty().bind(ficherosCarpetas);
+		ficheroCarpetasList.itemsProperty().bind(ficherosCarpetas);
 
 		carpetaCheck.selectedProperty().bindBidirectional(esCarpeta);
 		ficheroCheck.selectedProperty().bindBidirectional(esFichero);
 
+		// listeners
+		esCarpeta.addListener((o, ov, nv) -> onCarpetaSelected(o, ov, nv));
+		esFichero.addListener((o, ov, nv) -> onFicheroSelected(o, ov, nv));
+
 		// Init
-		rutaActualText.setText("C:\\Users\\USUARIO\\Desktop");
+		rutaActualText.setText("C:\\Users\\scrag\\OneDrive\\Escritorio\\Carpeta de prueba");
+	}
+
+	private void onFicheroSelected(ObservableValue<? extends Boolean> o, Boolean ov, Boolean nv) {
+
+		if (nv) {
+			carpetaCheck.setDisable(true);
+		} else {
+			carpetaCheck.setDisable(false);
+		}
+
+	}
+
+	private void onCarpetaSelected(ObservableValue<? extends Boolean> o, Boolean ov, Boolean nv) {
+
+		if (nv) {
+			ficheroCheck.setDisable(true);
+		} else {
+			ficheroCheck.setDisable(false);
+		}
+
 	}
 
 	public BorderPane getView() {
@@ -105,15 +130,32 @@ public class FicheroController implements Initializable {
 	void onCrear(ActionEvent event) {
 
 		try {
-			// Coge la ruta y el nombre del fichero
-			File f1 = new File(rutaActual.get() + "\\" + multiFuncion.get());
+			if(esCarpeta.get())
+			{	
+				// Coge la ruta y el nombre del fichero
+				File f1 = new File(rutaActual.get() + "\\" + multiFuncion.get());
 
-			if (f1.mkdir()) {
-				System.out.println("Fichero creado en la ubicación: " + rutaActual.get());
-				System.out.println("Fichero creado: " + multiFuncion.get());
-			} else {
-				System.out.println("Este fichero ya existe");
+				if (f1.mkdir()) {
+					System.out.println("Carpeta creada en la ubicaciï¿½n: " + rutaActual.get());
+					System.out.println("Carpeta creado: " + multiFuncion.get());
+				} else {
+					System.out.println("Este fichero ya existe");
+				}
 			}
+			if(esFichero.get())
+			{
+				File f1 = new File(rutaActual.get() + "\\" + multiFuncion.get());
+				
+				if(f1.createNewFile())
+				{
+					System.out.println("Fichero creado en la ubicaciï¿½n: " + rutaActual.get());
+					System.out.println("Fichero creado: " + multiFuncion.get());
+				} else {
+					System.out.println("Este fichero ya existe");
+				}
+				
+			}
+			
 
 		} catch (Exception e) {
 			System.err.println("Ocurrio el siguiente error: " + e);
@@ -125,7 +167,7 @@ public class FicheroController implements Initializable {
 
 		try {
 
-			// Creamos el fichero para listar
+			// Creamos File para listar
 			File listar = new File(rutaActual.get() + "\\" + multiFuncion.get());
 
 			BorrarDirectorio(listar);
@@ -168,7 +210,7 @@ public class FicheroController implements Initializable {
 			File[] ficheros = listar.listFiles();
 			for (int x = 0; x < ficheros.length; x++) {
 				ficherosCarpetas.add(ficheros[x]);
-			} 
+			}
 
 		} catch (Exception e) {
 			System.err.println("Ocurrio el siguiente error: " + e);

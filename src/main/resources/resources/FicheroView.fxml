@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane fx:id="view" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane fx:id="view" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
    <center>
       <GridPane alignment="CENTER" hgap="5.0" vgap="5.0" BorderPane.alignment="CENTER">
         <columnConstraints>
@@ -58,7 +58,7 @@
                </padding>
             </TextField>
             <Button fx:id="verFicherosCarpetasButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onVerFicherosCarpetas" text="Ver ficheros y carpetas" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
-            <ListView fx:id="ficheroCarpetasButton" GridPane.columnSpan="2147483647" GridPane.rowIndex="4" GridPane.rowSpan="2" />
+            <ListView fx:id="ficheroCarpetasList" GridPane.columnSpan="2147483647" GridPane.rowIndex="4" GridPane.rowSpan="2" />
             <VBox alignment="CENTER" spacing="5.0" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="6" GridPane.rowSpan="2147483647" GridPane.valignment="CENTER">
                <children>
                   <Button fx:id="verContenidoButton" mnemonicParsing="false" onAction="#onVerContenido" text="Ver contenido Fichero" />
