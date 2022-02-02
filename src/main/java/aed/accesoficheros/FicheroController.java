@@ -134,8 +134,7 @@ public class FicheroController implements Initializable {
 	void onCrear(ActionEvent event) {
 
 		try {
-			if(esCarpeta.get())
-			{	
+			if (esCarpeta.get()) {
 				// Coge la ruta y el nombre del fichero
 				File f1 = new File(rutaActual.get() + "\\" + multiFuncion.get());
 
@@ -143,23 +142,20 @@ public class FicheroController implements Initializable {
 					System.out.println("Carpeta creada en la ubicaci�n: " + rutaActual.get());
 					System.out.println("Carpeta creado: " + multiFuncion.get());
 				} else {
-					System.out.println("Este fichero ya existe");
+					System.out.println("Esta carpeta ya existe");
 				}
 			}
-			if(esFichero.get())
-			{
+			if (esFichero.get()) {
 				File f1 = new File(rutaActual.get() + "\\" + multiFuncion.get());
-				
-				if(f1.createNewFile())
-				{
+
+				if (f1.createNewFile()) {
 					System.out.println("Fichero creado en la ubicaci�n: " + rutaActual.get());
 					System.out.println("Fichero creado: " + multiFuncion.get());
 				} else {
 					System.out.println("Este fichero ya existe");
 				}
-				
+
 			}
-			
 
 		} catch (Exception e) {
 			System.err.println("Ocurrio el siguiente error: " + e);
@@ -174,12 +170,18 @@ public class FicheroController implements Initializable {
 			// Creamos File para listar
 			File listar = new File(rutaActual.get() + "\\" + multiFuncion.get());
 
-			BorrarDirectorio(listar);
+			if(listar.isDirectory()) {
+				BorrarDirectorio(listar);
+				listar.delete();
+			}
+			else
+				listar.delete();
 
 		} catch (Exception e) {
 			System.err.println("Ocurrio el siguiente error: " + e);
 		}
 	}
+
 	/**
 	 * Borra todo el contenido de una carpeta y tambien la misma
 	 * 
@@ -196,21 +198,20 @@ public class FicheroController implements Initializable {
 		}
 	}
 
-	//ModificarFichero
+	// ModificarFichero
 	@FXML
 	void onModificar(ActionEvent event) {
 
 		try {
 			FileWriter fw = null;
 			PrintWriter pw = null;
-			
-			fw = new FileWriter(rutaActual.get());
+
+			fw = new FileWriter(rutaActual.get() + "\\" + multiFuncion.get());
 			pw = new PrintWriter(fw);
 			pw.println(contenidoFichero.get());
-			
+
 			fw.close();
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			System.err.println("Ocurrio el siguiente error: " + e);
 		}
 	}
@@ -220,18 +221,13 @@ public class FicheroController implements Initializable {
 		try {
 			File f1 = new File(rutaActual.get());
 			File f2 = new File(multiFuncion.get());
-			
-			if(f1.renameTo(f2))
-			{
-				System.out.println("Renombrado de"+rutaActual+" a "+multiFuncion);
+
+			if (f1.renameTo(f2)) {
+				System.out.println("Renombrado de" + rutaActual + " a " + multiFuncion);
+			} else {
+				System.out.println("No renombrado de" + rutaActual + " a " + multiFuncion);
 			}
-			else
-			{
-				System.out.println("No renombrado de"+rutaActual+" a "+multiFuncion);
-			}
-		}
-		catch(Exception e)
-		{
+		} catch (Exception e) {
 			System.err.println("Ocurrio el siguiente error: " + e);
 		}
 	}
@@ -239,22 +235,19 @@ public class FicheroController implements Initializable {
 	@FXML
 	void onVerContenido(ActionEvent event) {
 		try {
-			File f1 = new File(rutaActual.get());
-			
-			if(f1.canRead())
-			{
+			File f1 = new File(rutaActual.get() + "\\" + multiFuncion.get());
+
+			if (f1.canRead()) {
 				String cadena;
-				
+
 				FileReader fr = new FileReader(rutaActual.get());
 				BufferedReader bf = new BufferedReader(fr);
-				
-				while((cadena = bf.readLine())!=null) {
-					contenidoTextArea.setText(contenidoTextArea.getText()+cadena);
+
+				while ((cadena = bf.readLine()) != null) {
+					contenidoTextArea.setText(contenidoTextArea.getText() + cadena);
 				}
 			}
-		}
-		catch(Exception e)
-		{
+		} catch (Exception e) {
 			System.err.println("Ocurrio el siguiente error: " + e);
 		}
 	}

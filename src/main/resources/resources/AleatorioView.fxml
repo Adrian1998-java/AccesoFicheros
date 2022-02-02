@@ -1,8 +1,75 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
 
-<GridPane xmlns:fx="http://javafx.com/fxml/1">
-	<!-- TODO Add Nodes -->
-</GridPane>
-
+<BorderPane fx:id="view" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+   <top>
+      <HBox alignment="CENTER" spacing="5.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label text="Ruta del archivo: " />
+            <TextField fx:id="rutaText" HBox.hgrow="ALWAYS" />
+            <Button fx:id="visualizarButton" defaultButton="true" mnemonicParsing="false" onAction="#onVisualizar" text="Visualizar" />
+         </children>
+         <padding>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </padding>
+      </HBox>
+   </top>
+   <left>
+      <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="200.0" spacing="5.0" BorderPane.alignment="CENTER">
+         <children>
+            <GridPane vgap="5.0">
+              <columnConstraints>
+                <ColumnConstraints halignment="RIGHT" hgrow="NEVER" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="NEVER" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="NEVER" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="NEVER" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="NEVER" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="NEVER" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="NEVER" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="NEVER" />
+              </rowConstraints>
+               <children>
+                  <Label text="CodHabitacion: " />
+                  <Label text="CodHotel: " GridPane.rowIndex="1" />
+                  <Label text="Num. Habitacion: " GridPane.rowIndex="2" />
+                  <Label text="Capacidad: " GridPane.rowIndex="3" />
+                  <Label text="Predio Dia: " GridPane.rowIndex="4" />
+                  <Label text="Activa: " GridPane.rowIndex="5" />
+                  <TextField fx:id="codHabitacionText" GridPane.columnIndex="1" />
+                  <TextField fx:id="codHotelText" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <TextField fx:id="numHabitacionText" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <TextField fx:id="capacidadText" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <TextField fx:id="precioDiaText" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                  <CheckBox fx:id="activaCheck" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+               </children>
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+            </GridPane>
+            <Button fx:id="crearButton" mnemonicParsing="false" onAction="#onCrear" prefWidth="100.0" text="Crear" />
+            <Button fx:id="modificarButton" mnemonicParsing="false" onAction="#onModificar" prefWidth="100.0" text="Modificar" />
+         </children>
+      </VBox>
+   </left>
+   <center>
+      <TextArea fx:id="registrosAreaBox" editable="false" BorderPane.alignment="CENTER">
+         <BorderPane.margin>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </BorderPane.margin>
+      </TextArea>
+   </center>
+</BorderPane>
