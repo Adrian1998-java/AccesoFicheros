@@ -2,10 +2,12 @@ package aed.accesoficheros;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -20,12 +22,17 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Priority;
 
 public class FicheroController implements Initializable {
 
@@ -37,7 +44,7 @@ public class FicheroController implements Initializable {
 	private BooleanProperty esCarpeta = new SimpleBooleanProperty();
 	private BooleanProperty esFichero = new SimpleBooleanProperty();
 
-	private ListProperty<File> ficherosCarpetas = new SimpleListProperty<File>();
+	private ListProperty<String> ficherosCarpetas = new SimpleListProperty<>();
 
 	// View
 	@FXML
@@ -68,7 +75,7 @@ public class FicheroController implements Initializable {
 	private Button verFicherosCarpetasButton;
 
 	@FXML
-	private ListView<File> ficheroCarpetasList;
+	private ListView<String> ficheroCarpetasList;
 
 	@FXML
 	private Button verContenidoButton;
@@ -139,26 +146,48 @@ public class FicheroController implements Initializable {
 				File f1 = new File(rutaActual.get() + "\\" + multiFuncion.get());
 
 				if (f1.mkdir()) {
-					System.out.println("Carpeta creada en la ubicaci�n: " + rutaActual.get());
-					System.out.println("Carpeta creado: " + multiFuncion.get());
+					Alert alert = new Alert(AlertType.CONFIRMATION);
+					alert.setTitle("AVISO");
+					alert.setHeaderText("Procedimiento realizado");
+					alert.setContentText("Carpeta creada en la ubicaci�n: " + rutaActual.get() + "\nCarpeta creada: "
+							+ multiFuncion.get());
+					alert.showAndWait();
 				} else {
-					System.out.println("Esta carpeta ya existe");
+					Alert alert = new Alert(AlertType.INFORMATION);
+					alert.setTitle("AVISO");
+					alert.setHeaderText("Esta carpeta ya existe");
+					alert.setContentText("");
+					alert.showAndWait();
 				}
 			}
 			if (esFichero.get()) {
 				File f1 = new File(rutaActual.get() + "\\" + multiFuncion.get());
 
 				if (f1.createNewFile()) {
-					System.out.println("Fichero creado en la ubicaci�n: " + rutaActual.get());
-					System.out.println("Fichero creado: " + multiFuncion.get());
+					Alert alert = new Alert(AlertType.CONFIRMATION);
+					alert.setTitle("AVISO");
+					alert.setHeaderText("Procedimiento realizado");
+					alert.setContentText("Fichero creado en la ubicaci�n: " + rutaActual.get() + "\nFichero creado: "
+							+ multiFuncion.get());
+					alert.showAndWait();
 				} else {
-					System.out.println("Este fichero ya existe");
+					Alert alert = new Alert(AlertType.INFORMATION);
+					alert.setTitle("AVISO");
+					alert.setHeaderText("Este fichero ya existe");
+					alert.setContentText("");
+					alert.showAndWait();
+
 				}
 
 			}
 
 		} catch (Exception e) {
-			System.err.println("Ocurrio el siguiente error: " + e);
+
+			Alert alert = new Alert(AlertType.WARNING);
+			alert.setTitle("AVISO");
+			alert.setHeaderText("Ocurrio el siguiente error: ");
+			alert.setContentText(e.getStackTrace()+"");
+			alert.showAndWait();
 		}
 	}
 
@@ -170,15 +199,18 @@ public class FicheroController implements Initializable {
 			// Creamos File para listar
 			File listar = new File(rutaActual.get() + "\\" + multiFuncion.get());
 
-			if(listar.isDirectory()) {
+			if (listar.isDirectory()) {
 				BorrarDirectorio(listar);
 				listar.delete();
-			}
-			else
+			} else
 				listar.delete();
 
 		} catch (Exception e) {
-			System.err.println("Ocurrio el siguiente error: " + e);
+			Alert alert = new Alert(AlertType.WARNING);
+			alert.setTitle("AVISO");
+			alert.setHeaderText("Ocurrio el siguiente error: ");
+			alert.setContentText(e.getStackTrace()+"");
+			alert.showAndWait();
 		}
 	}
 
@@ -212,23 +244,40 @@ public class FicheroController implements Initializable {
 
 			fw.close();
 		} catch (Exception e) {
-			System.err.println("Ocurrio el siguiente error: " + e);
+			Alert alert = new Alert(AlertType.WARNING);
+			alert.setTitle("AVISO");
+			alert.setHeaderText("Ocurrio el siguiente error: ");
+			alert.setContentText(e.getStackTrace()+"");
+			alert.showAndWait();
 		}
 	}
 
+	/**
+	 * Mover / Renombrar el fichero o carpeta
+	 * 
+	 * @param event
+	 */
 	@FXML
 	void onMover(ActionEvent event) {
 		try {
 			File f1 = new File(rutaActual.get());
 			File f2 = new File(multiFuncion.get());
 
-			if (f1.renameTo(f2)) {
-				System.out.println("Renombrado de" + rutaActual + " a " + multiFuncion);
+			if (f2.exists()) {
+				if (f1.renameTo(f2)) {
+					System.out.println("Renombrado de" + rutaActual + " a " + multiFuncion);
+				} else {
+					System.out.println("No renombrado de" + rutaActual + " a " + multiFuncion);
+				}
 			} else {
-				System.out.println("No renombrado de" + rutaActual + " a " + multiFuncion);
+				System.out.println("La ruta u objeto no existe");
 			}
 		} catch (Exception e) {
-			System.err.println("Ocurrio el siguiente error: " + e);
+			Alert alert = new Alert(AlertType.WARNING);
+			alert.setTitle("AVISO");
+			alert.setHeaderText("Ocurrio el siguiente error: ");
+			alert.setContentText(e.getStackTrace()+"");
+			alert.showAndWait();
 		}
 	}
 
@@ -248,7 +297,11 @@ public class FicheroController implements Initializable {
 				}
 			}
 		} catch (Exception e) {
-			System.err.println("Ocurrio el siguiente error: " + e);
+			Alert alert = new Alert(AlertType.WARNING);
+			alert.setTitle("AVISO");
+			alert.setHeaderText("Ocurrio el siguiente error: ");
+			alert.setContentText(e.getStackTrace()+"");
+			alert.showAndWait();
 		}
 	}
 
@@ -258,11 +311,38 @@ public class FicheroController implements Initializable {
 			File listar = new File(rutaActual.get());
 			File[] ficheros = listar.listFiles();
 			for (int x = 0; x < ficheros.length; x++) {
-				ficherosCarpetas.add(ficheros[x]);
+				ficherosCarpetas.add(ficheros[x].getPath());
 			}
 
 		} catch (Exception e) {
-			System.err.println("Ocurrio el siguiente error: " + e);
+			Alert alert = new Alert(AlertType.WARNING);
+			alert.setTitle("ERROR");
+			alert.setHeaderText("Ocurrio el siguiente error");
+
+			Exception ex = new FileNotFoundException("No se pudo realizar la accion");
+
+			// Create expandable Exception.
+			StringWriter sw = new StringWriter();
+			PrintWriter pw = new PrintWriter(sw);
+			ex.printStackTrace(pw);
+			String exceptionText = sw.toString();
+
+			TextArea textArea = new TextArea(exceptionText);
+			textArea.setEditable(false);
+			textArea.setWrapText(true);
+
+			textArea.setMaxWidth(Double.MAX_VALUE);
+			textArea.setMaxHeight(Double.MAX_VALUE);
+			GridPane.setVgrow(textArea, Priority.ALWAYS);
+			GridPane.setHgrow(textArea, Priority.ALWAYS);
+
+			GridPane expContent = new GridPane();
+			expContent.setMaxWidth(Double.MAX_VALUE);
+			expContent.add(textArea, 0, 1);
+
+			alert.getDialogPane().setExpandableContent(expContent);
+
+			alert.showAndWait();
 		}
 
 	}
