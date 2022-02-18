@@ -10,6 +10,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
@@ -135,4 +136,16 @@
    <padding>
       <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
    </padding>
+   <top>
+      <HBox alignment="CENTER_LEFT" maxWidth="1.7976931348623157E308" spacing="5.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label text="Ruta fichero:" />
+            <TextField fx:id="rutaXMLText" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS" />
+            <Button fx:id="VerContenidoButton" defaultButton="true" mnemonicParsing="false" onAction="#onVerContenido" text="Ver contenido" />
+         </children>
+         <padding>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </padding>
+      </HBox>
+   </top>
 </BorderPane>

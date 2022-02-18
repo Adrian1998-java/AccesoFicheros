@@ -37,32 +37,34 @@
               <rowConstraints>
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="NEVER" />
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="NEVER" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="NEVER" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="NEVER" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="NEVER" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="NEVER" />
               </rowConstraints>
                <children>
-                  <Label text="CodHabitacion: " />
-                  <Label text="CodHotel: " GridPane.rowIndex="1" />
-                  <Label text="Num. Habitacion: " GridPane.rowIndex="2" />
-                  <Label text="Capacidad: " GridPane.rowIndex="3" />
-                  <Label text="Predio Dia: " GridPane.rowIndex="4" />
-                  <Label text="Activa: " GridPane.rowIndex="5" />
-                  <TextField fx:id="codHabitacionText" GridPane.columnIndex="1" />
-                  <TextField fx:id="codHotelText" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <TextField fx:id="numHabitacionText" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                  <TextField fx:id="capacidadText" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                  <TextField fx:id="precioDiaText" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                  <CheckBox fx:id="activaCheck" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                  <Label text="CodHotel: " />
+                  <Label text="Num. Habitacion: " GridPane.rowIndex="1" />
+                  <Label text="Capacidad: " GridPane.rowIndex="2" />
+                  <Label text="Predio Dia: " GridPane.rowIndex="3" />
+                  <Label text="Activa: " GridPane.rowIndex="4" />
+                  <TextField fx:id="codHotelText" GridPane.columnIndex="1" />
+                  <TextField fx:id="numHabitacionText" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <TextField fx:id="capacidadText" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <TextField fx:id="precioDiaText" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <CheckBox fx:id="activaCheck" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                </children>
                <padding>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </padding>
             </GridPane>
-            <Button fx:id="crearButton" mnemonicParsing="false" onAction="#onCrear" prefWidth="100.0" text="Crear" />
-            <Button fx:id="modificarButton" mnemonicParsing="false" onAction="#onModificar" prefWidth="100.0" text="Modificar" />
+            <Button fx:id="crearButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onCrear" text="Crear Registro" />
+            <TextField fx:id="codHabitacionText" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="codHabitacion para modificar y ver datos" />
+            <Button fx:id="modificarButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onModificar" text=" Modificar preciodia (CodHabitacion)" />
+            <Button fx:id="VerDatosButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onVerDatosButton" text="Ver datos por CondHabitacion" />
          </children>
+         <padding>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </padding>
       </VBox>
    </left>
    <center>

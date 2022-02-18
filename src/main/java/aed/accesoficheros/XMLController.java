@@ -69,6 +69,12 @@ public class XMLController implements Initializable {
 	@FXML
 	private TextArea vistaText;
 
+	@FXML
+	private Button VerContenidoButton;
+
+	@FXML
+	private TextField rutaXMLText;
+
 	public XMLController() throws IOException {
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/resources/XMLView.fxml"));
 		loader.setController(this);
@@ -78,24 +84,22 @@ public class XMLController implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 
-		try {
-			VisualizarFichero();
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (JDOMException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		rutaXMLText.setText("C:\\Users\\scrag\\OneDrive\\Escritorio\\Habitaciones.xml");
+		
 
 	}
 
-	public void VisualizarFichero() throws FileNotFoundException, JDOMException, IOException {
-		SAXBuilder builder = new SAXBuilder();
-		Document documentJDOM = builder.build(new FileInputStream("C:\\Habitaciones.xml"));
+	public BorderPane getView() {
+		return view;
+	}
+
+	//Visualizamos el fichero que hemos puesto en la ruta
+    @FXML
+    void onVerContenido(ActionEvent event) throws FileNotFoundException, JDOMException, IOException {
+    	vistaText.clear();
+    	
+    	SAXBuilder builder = new SAXBuilder();
+		Document documentJDOM = builder.build(new FileInputStream(rutaXMLText.getText()));
 
 		Element raiz = documentJDOM.getRootElement();
 
@@ -147,18 +151,14 @@ public class XMLController implements Initializable {
 				}
 			}
 		}
-
-	}
-
-	public BorderPane getView() {
-		return view;
-	}
-
+    }
+    
+    //Añadimos una estancia para un cliente
 	@FXML
 	void onAniadir(ActionEvent event) throws FileNotFoundException, JDOMException, IOException {
 
 		SAXBuilder builder = new SAXBuilder();
-		Document documentJDOM = builder.build(new FileInputStream("C:\\Habitaciones.xml"));
+		Document documentJDOM = builder.build(new FileInputStream(rutaXMLText.getText()));
 
 		Element raiz = documentJDOM.getRootElement();
 
@@ -183,29 +183,29 @@ public class XMLController implements Initializable {
 		}
 
 		XMLOutputter out = new XMLOutputter(Format.getPrettyFormat());
-		FileOutputStream file = new FileOutputStream("C:\\Habitaciones.xml");
+		FileOutputStream file = new FileOutputStream(rutaXMLText.getText());
 		out.output(documentJDOM, file);
+		onVerContenido(event);
 
-		VisualizarFichero();
 	}
-
+	//Copiamos el fichero actual en otro fichero
 	@FXML
 	void onCopiar(ActionEvent event) throws FileNotFoundException, JDOMException, IOException {
 
 		SAXBuilder builder = new SAXBuilder();
-		Document documentJDOM = builder.build(new FileInputStream("C:\\Habitaciones.xml"));
+		Document documentJDOM = builder.build(new FileInputStream(rutaXMLText.getText()));
 
 		XMLOutputter out = new XMLOutputter(Format.getPrettyFormat());
 		FileOutputStream file = new FileOutputStream(copiarRutaText.getText() + ".xml");
 		out.output(documentJDOM, file);
 
 	}
-
+	//Eliminamos una habitacion segun su num habitacion
 	@FXML
 	void onEliminar(ActionEvent event) throws FileNotFoundException, JDOMException, IOException {
 
 		SAXBuilder builder = new SAXBuilder();
-		Document documentJDOM = builder.build(new FileInputStream("C:\\Habitaciones.xml"));
+		Document documentJDOM = builder.build(new FileInputStream(rutaXMLText.getText()));
 
 		Element raiz = documentJDOM.getRootElement();
 
@@ -225,17 +225,16 @@ public class XMLController implements Initializable {
 		hijosRaiz.remove(HijoEliminar);
 
 		XMLOutputter out = new XMLOutputter(Format.getPrettyFormat());
-		FileOutputStream file = new FileOutputStream("C:\\Habitaciones.xml");
+		FileOutputStream file = new FileOutputStream(rutaXMLText.getText());
 		out.output(documentJDOM, file);
 
-		VisualizarFichero();
 
 	}
-
+	//Modificamos el precidai segun su num habitacion
 	@FXML
 	void onModificar(ActionEvent event) throws FileNotFoundException, JDOMException, IOException {
 		SAXBuilder builder = new SAXBuilder();
-		Document documentJDOM = builder.build(new FileInputStream("C:\\Habitaciones.xml"));
+		Document documentJDOM = builder.build(new FileInputStream(rutaXMLText.getText()));
 
 		Element raiz = documentJDOM.getRootElement();
 
@@ -252,10 +251,9 @@ public class XMLController implements Initializable {
 		}
 
 		XMLOutputter out = new XMLOutputter(Format.getPrettyFormat());
-		FileOutputStream file = new FileOutputStream("C:\\Habitaciones.xml");
+		FileOutputStream file = new FileOutputStream(rutaXMLText.getText());
 		out.output(documentJDOM, file);
 
-		VisualizarFichero();
 	}
 
 }
