@@ -20,7 +20,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
@@ -85,7 +84,6 @@ public class XMLController implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 
 		rutaXMLText.setText("C:\\Users\\scrag\\OneDrive\\Escritorio\\Habitaciones.xml");
-		
 
 	}
 
@@ -93,12 +91,12 @@ public class XMLController implements Initializable {
 		return view;
 	}
 
-	//Visualizamos el fichero que hemos puesto en la ruta
-    @FXML
-    void onVerContenido(ActionEvent event) throws FileNotFoundException, JDOMException, IOException {
-    	vistaText.clear();
-    	
-    	SAXBuilder builder = new SAXBuilder();
+	// Visualizamos el fichero que hemos puesto en la ruta
+	@FXML
+	void onVerContenido(ActionEvent event) throws FileNotFoundException, JDOMException, IOException {
+		vistaText.clear();
+
+		SAXBuilder builder = new SAXBuilder();
 		Document documentJDOM = builder.build(new FileInputStream(rutaXMLText.getText()));
 
 		Element raiz = documentJDOM.getRootElement();
@@ -151,9 +149,9 @@ public class XMLController implements Initializable {
 				}
 			}
 		}
-    }
-    
-    //Añadimos una estancia para un cliente
+	}
+
+	// Añadimos una estancia para un cliente
 	@FXML
 	void onAniadir(ActionEvent event) throws FileNotFoundException, JDOMException, IOException {
 
@@ -185,10 +183,12 @@ public class XMLController implements Initializable {
 		XMLOutputter out = new XMLOutputter(Format.getPrettyFormat());
 		FileOutputStream file = new FileOutputStream(rutaXMLText.getText());
 		out.output(documentJDOM, file);
+
 		onVerContenido(event);
 
 	}
-	//Copiamos el fichero actual en otro fichero
+
+	// Copiamos el fichero actual en otro fichero
 	@FXML
 	void onCopiar(ActionEvent event) throws FileNotFoundException, JDOMException, IOException {
 
@@ -196,11 +196,12 @@ public class XMLController implements Initializable {
 		Document documentJDOM = builder.build(new FileInputStream(rutaXMLText.getText()));
 
 		XMLOutputter out = new XMLOutputter(Format.getPrettyFormat());
-		FileOutputStream file = new FileOutputStream(copiarRutaText.getText() + ".xml");
+		FileOutputStream file = new FileOutputStream(copiarRutaText.getText());
 		out.output(documentJDOM, file);
 
 	}
-	//Eliminamos una habitacion segun su num habitacion
+
+	// Eliminamos una habitacion segun su num habitacion
 	@FXML
 	void onEliminar(ActionEvent event) throws FileNotFoundException, JDOMException, IOException {
 
@@ -228,9 +229,11 @@ public class XMLController implements Initializable {
 		FileOutputStream file = new FileOutputStream(rutaXMLText.getText());
 		out.output(documentJDOM, file);
 
+		onVerContenido(event);
 
 	}
-	//Modificamos el precidai segun su num habitacion
+
+	// Modificamos el precidai segun su num habitacion
 	@FXML
 	void onModificar(ActionEvent event) throws FileNotFoundException, JDOMException, IOException {
 		SAXBuilder builder = new SAXBuilder();
@@ -253,6 +256,8 @@ public class XMLController implements Initializable {
 		XMLOutputter out = new XMLOutputter(Format.getPrettyFormat());
 		FileOutputStream file = new FileOutputStream(rutaXMLText.getText());
 		out.output(documentJDOM, file);
+
+		onVerContenido(event);
 
 	}
 
